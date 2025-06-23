@@ -94,9 +94,16 @@ const auditConfig = {
   enableInputTracking: true,
   debounceTime: 300, // Input debounce in ms
   trackingFilters: {
-    skipClasses: ['no-audit'], // Skip elements with these classes
+    // Class-based filtering
+    skipClasses: ['no-audit', 'private', 'sensitive'], // Skip elements with these classes
     trackOnlyClasses: null, // Only track these classes (null = all)
-    skipTags: ['script', 'style'], // Skip these HTML tags
+    
+    // Tag-based filtering
+    skipTags: ['script', 'style', 'meta', 'head'], // Skip these HTML tags
+    trackOnlyTags: null, // Only track these tags (null = all)
+    
+    // ID-based filtering
+    skipIds: ['private-section', 'sensitive-data'], // Skip elements with these IDs
   },
   privacy: {
     logFormValues: false, // Don't log sensitive form data
@@ -104,6 +111,55 @@ const auditConfig = {
     maxTextLength: 50, // Truncate text content
   },
 };
+```
+
+### Element Filtering Methods
+
+The audit system provides multiple ways to exclude elements from tracking:
+
+#### 1. **Attribute-Based Filtering**
+```html
+<!-- Elements with data-no-audit attribute are automatically skipped -->
+<button data-no-audit>This button won't be tracked</button>
+<form data-no-audit>This form won't be tracked</form>
+<input data-no-audit placeholder="Private input" />
+```
+
+#### 2. **Class-Based Filtering**
+```html
+<!-- Configure: skipClasses: ['no-audit', 'private'] -->
+<button class="no-audit">Not tracked</button>
+<div class="private sensitive-data">Not tracked</div>
+<input class="form-control private" /> <!-- Not tracked due to 'private' class -->
+
+<!-- Configure: trackOnlyClasses: ['track-me'] -->
+<button class="track-me">Only buttons with this class are tracked</button>
+<button class="regular-button">This won't be tracked</button>
+```
+
+#### 3. **ID-Based Filtering**
+```html
+<!-- Configure: skipIds: ['sensitive-form', 'private-data'] -->
+<form id="sensitive-form">This form won't be tracked</form>
+<div id="private-data">This section won't be tracked</div>
+```
+
+#### 4. **Tag-Based Filtering**
+```typescript
+// Configure: skipTags: ['button', 'input']
+// This would skip ALL buttons and inputs from tracking
+
+// Configure: trackOnlyTags: ['button']
+// This would ONLY track button elements, ignoring links, inputs, etc.
+```
+
+#### 5. **Combination Filtering**
+```html
+<!-- Multiple filtering methods work together -->
+<div class="no-audit" id="skip-me" data-no-audit>
+  <!-- This element is excluded by class, ID, AND attribute -->
+  <button>This button won't be tracked either (parent is excluded)</button>
+</div>
 ```
 
 ### Usage Examples
@@ -114,10 +170,15 @@ const auditConfig = {
 <AuditLogTracker config={auditConfig} />
 
 // All interactions are automatically tracked!
-<button onClick={handleClick}>Click me</button> // ✅ Tracked
-<form onSubmit={handleSubmit}>...</form>        // ✅ Tracked
-<input onChange={handleChange} />               // ✅ Tracked
-<button className="no-audit">Skip me</button>   // ❌ Skipped
+<button onClick={handleClick}>Click me</button>           // ✅ Tracked
+<form onSubmit={handleSubmit}>...</form>                  // ✅ Tracked  
+<input onChange={handleChange} />                         // ✅ Tracked
+
+// Elements excluded from tracking
+<button className="no-audit">Skip me</button>             // ❌ Skipped (class)
+<button data-no-audit>Skip me too</button>                // ❌ Skipped (attribute)
+<form id="sensitive-form">Private form</form>             // ❌ Skipped (ID)
+<script>console.log('hello')</script>                     // ❌ Skipped (tag)
 ```
 
 #### Manual Business Event Tracking
