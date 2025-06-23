@@ -156,11 +156,11 @@ npm run dev
 
 This will start:
 - TypeScript Node.js server with hot-reload on `http://localhost:5003`
-- React TypeScript app on `http://localhost:3000`
+- React TypeScript app on `http://localhost:3003`
 
 ### Testing the Audit System
 
-1. Navigate to `http://localhost:3000`
+1. Navigate to `http://localhost:3003`
 2. Visit Page 1 to see the **Audit Tracking Test Section**
 3. Try different interactions:
    - Type in the text area (debounced input tracking)
