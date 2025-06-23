@@ -110,7 +110,7 @@ function createAuditEntry(
   };
 }
 
-interface RouteAuditTrackerProps {
+interface AuditLogTrackerProps {
   config?: Partial<AuditConfig>;
 }
 
@@ -118,7 +118,7 @@ interface RouteAuditTrackerProps {
  * React component that logs route changes and UI interactions for audit purposes.
  * Mount this once at the app's top-level (e.g., inside App.tsx or Layout.tsx)
  */
-export function RouteAuditTracker({ config: userConfig }: RouteAuditTrackerProps = {}): null {
+export function AuditLogTracker({ config: userConfig }: AuditLogTrackerProps = {}): null {
   const location = useLocation();
   const config = { ...defaultAuditConfig, ...userConfig };
 

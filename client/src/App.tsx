@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import Page1 from './components/Page1';
 import Page2 from './components/Page2';
-import { RouteAuditTracker } from './system/RouteAuditTracker';
+import { AuditLogTracker } from './system/AuditLogTracker';
 import { AuditConfig } from './system/AuditConfig';
 
 function Navigation(): JSX.Element {
@@ -51,8 +51,8 @@ function App(): JSX.Element {
 
   return (
     <Router>
-      {/* Enhanced RouteAuditTracker with custom configuration */}
-      <RouteAuditTracker config={auditConfig} />
+      {/* Enhanced AuditLogTracker with custom configuration */}
+      <AuditLogTracker config={auditConfig} />
       <div className="container">
         <Navigation />
         <Routes>

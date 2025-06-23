@@ -10,7 +10,7 @@ A simple full-stack application with React frontend and Node.js backend that dem
 - **TypeScript**: Full TypeScript implementation for both frontend and backend
 - **Modern UI**: Beautiful gradient background with smooth animations and responsive design
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 ├── server/
@@ -29,7 +29,7 @@ A simple full-stack application with React frontend and Node.js backend that dem
 │       │   ├── Page1.tsx     # TypeScript React components
 │       │   └── Page2.tsx
 │       ├── system/
-│       │   └── RouteAuditTracker.tsx
+│       │   └── AuditLogTracker.tsx
 │       ├── App.tsx
 │       ├── index.tsx
 │       └── index.css
@@ -103,38 +103,13 @@ npm run client
 - `POST /api/audit-log` - Records route change audit logs
 - `GET /api/health` - Health check endpoint
 
-## Route Audit Tracking
+## 🔍 Audit Logging System
 
-The application includes automatic route audit tracking that logs every page navigation:
+This application includes a comprehensive audit logging system that tracks user interactions and route changes for monitoring and analytics purposes.
 
-### How it works:
-1. **RouteAuditTracker Component**: Monitors route changes using React Router's `useLocation`
-2. **Automatic Logging**: Sends audit data to `/api/audit-log` on every route change
-3. **User Identification**: Uses localStorage 'userId' or defaults to 'anonymous'
-4. **Server Logging**: Server logs all route changes to console (can be extended to database)
+### Features
 
-### TypeScript Interfaces:
-```typescript
-// Client-side
-interface AuditLogEntry {
-  userId: string;
-  path: string;
-  timestamp: string;
-}
-
-// Server-side
-interface AuditLogEntry {
-  userId: string;
-  path: string;
-  timestamp: string;
-}
-```
-
-### Setting a User ID:
-To set a custom user ID for tracking, use localStorage:
-```javascript
-localStorage.setItem('userId', 'your-user-id');
-```
+1. **AuditLogTracker Component**: Monitors route changes using React Router's `useLocation`
 
 ## Usage
 

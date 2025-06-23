@@ -46,6 +46,6 @@ export interface CustomAuditEvent {
 }
 
 export function trackCustomEvent(event: CustomAuditEvent): void {
-  // This will be implemented in the RouteAuditTracker
+  // This will be implemented in the AuditLogTracker
   window.dispatchEvent(new CustomEvent('audit-custom-event', { detail: event }));
 } 
